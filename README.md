@@ -1,4 +1,4 @@
-# How to Fish 1.0.12 — web port (build 98)
+# How to Fish 1.0.12 — web port (build 103)
 
 A browser (WebGL) port of **How to Fish** v1.0.12 (Steam app 4001890), rebuilt from the shipped
 Windows build and hosted on [Red Portal](https://redportal.dpdns.org).
@@ -20,9 +20,9 @@ Build/
 StreamingAssets/        addressables + localization
 ```
 
-`index.html` reassembles the split parts at load time and appends a cache-busting `?v=<tag>` to
-every payload request, so a stale browser cache cannot silently serve an old build. **The tab title
-is the build identity** — if it does not read `How to Fish 1.0.12 b98`, the browser is running
+`index.html` carries the exact part list, reassembles the parts at load time and appends a
+cache-busting `?v=<version>-<content hash>` to every payload, loader and framework request, so a stale browser cache cannot silently serve an old build. **The tab title
+is the build identity** — if it does not read `How to Fish 1.0.12 b103`, the browser is running
 something else.
 
 ## Running it
@@ -50,4 +50,22 @@ connections, so frames are forwarded by a relay running inside Red Portal's own 
 * Anti-aliasing is SMAA rather than TAA.
 * Decal rendering layers are off — required, or **no creature renders at all** (see the notes).
 * VFX Graph effects (fire, splashes, explosions) do not render on WebGL.
+* Sounds are preloaded at startup (except long music/ambience tracks), because WebGL loads audio
+  asynchronously and would otherwise drop the first play of every sound. Costs ~400 MB of browser memory.
+* Default look sensitivity is 6.00 (Steam: 1.00).
+* The pause menu's Quit saves and returns to the main menu (a browser tab cannot quit).
 * Menu credits link to <https://github.com/VVVULTURE> and <https://redportal.dpdns.org>.
+
+## Build 103 changes (from 98)
+
+* **Fixed: the game crashed (stack overflow) whenever the Spider Crab, Giant Piranha, Bowhead Whale
+  or Mutated Bowhead Whale boss appeared.** A decompiler defect turned a non-virtual base call into
+  infinite recursion. Found by comparing the whole game assembly's IL with the Steam build.
+* Fixed: after a multiplayer host returned to the menu, a destroyed player kept running every
+  network tick (a NullReferenceException 60 times a second).
+* Fixed: the first play of every sound was silent.
+* Fixed: settings changed from the main menu were lost when the tab closed.
+* Fixed: pause-menu Quit froze the tab.
+* Fixed: cache-busting never applied to the deployed page (stale builds could be served), and the
+  loader probed for missing files (17 failed requests per load, now 0).
+* Default sensitivity 6.00; relay transport hardened against re-entrant stops.
