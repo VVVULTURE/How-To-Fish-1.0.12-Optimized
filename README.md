@@ -1,4 +1,4 @@
-# How to Fish 1.0.12 — web port (build 103)
+# How to Fish 1.0.12 — web port (build 109)
 
 A browser (WebGL) port of **How to Fish** v1.0.12 (Steam app 4001890), rebuilt from the shipped
 Windows build and hosted on [Red Portal](https://redportal.dpdns.org).
@@ -22,7 +22,7 @@ StreamingAssets/        addressables + localization
 
 `index.html` carries the exact part list, reassembles the parts at load time and appends a
 cache-busting `?v=<version>-<content hash>` to every payload, loader and framework request, so a stale browser cache cannot silently serve an old build. **The tab title
-is the build identity** — if it does not read `How to Fish 1.0.12 b103`, the browser is running
+is the build identity** — if it does not read `How to Fish 1.0.12 b109`, the browser is running
 something else.
 
 ## Running it
@@ -53,8 +53,20 @@ connections, so frames are forwarded by a relay running inside Red Portal's own 
 * Sounds are preloaded at startup (except long music/ambience tracks), because WebGL loads audio
   asynchronously and would otherwise drop the first play of every sound. Costs ~400 MB of browser memory.
 * Default look sensitivity is 6.00 (Steam: 1.00).
+* No microphone / proximity chat.
 * The pause menu's Quit saves and returns to the main menu (a browser tab cannot quit).
 * Menu credits link to <https://github.com/VVVULTURE> and <https://redportal.dpdns.org>.
+
+## Build 109 changes (from 103)
+
+* **Island ground is grey again, and lightmapped surfaces are lit like Steam.** Two causes:
+  lightmap shader variants were stripped at build time (Lightmap Modes: Automatic sees no baked
+  data, because the port attaches the Steam lightmaps at runtime), so no lightmap was ever sampled;
+  and 67 textures Steam ships uncompressed (the colour palette, UI, font atlases, SMAA lookup) were
+  block-compressed, which bled the palette's grey into the magenta beside it.
+* Microphone / proximity chat options, Push To Talk binds and the HUD mic meter are removed
+  (no mic support on the web).
+* Verified through the Google-Sites launcher -> Red Portal blob tab -> game blob tab chain.
 
 ## Build 103 changes (from 98)
 
