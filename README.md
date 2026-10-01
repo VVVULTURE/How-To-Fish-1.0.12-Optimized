@@ -1,4 +1,4 @@
-# How to Fish 1.0.12 — web port (build 109)
+# How to Fish 1.0.12 — web port (build 119)
 
 A browser (WebGL) port of **How to Fish** v1.0.12 (Steam app 4001890), rebuilt from the shipped
 Windows build and hosted on [Red Portal](https://redportal.dpdns.org).
@@ -22,7 +22,7 @@ StreamingAssets/        addressables + localization
 
 `index.html` carries the exact part list, reassembles the parts at load time and appends a
 cache-busting `?v=<version>-<content hash>` to every payload, loader and framework request, so a stale browser cache cannot silently serve an old build. **The tab title
-is the build identity** — if it does not read `How to Fish 1.0.12 b109`, the browser is running
+is the build identity** — if it does not read `How to Fish 1.0.12 b119`, the browser is running
 something else.
 
 ## Running it
@@ -55,7 +55,18 @@ connections, so frames are forwarded by a relay running inside Red Portal's own 
 * Default look sensitivity is 6.00 (Steam: 1.00).
 * No microphone / proximity chat.
 * The pause menu's Quit saves and returns to the main menu (a browser tab cannot quit).
+* Reel of Fortune machine bodies render with a small depth offset (WebGL depth precision).
+* "Join the Discord" opens the Red Portal Discord server.
 * Menu credits link to <https://github.com/VVVULTURE> and <https://redportal.dpdns.org>.
+
+## Build 119 changes (from 109)
+
+* **Fixed the Reel of Fortune screen turning flat yellow / red / glitchy at a distance or an angle.**
+  The machine model has a raised screen plate 3 mm behind the screen's UI. Steam (D3D11, reversed-Z
+  float depth) separates them; WebGL's 24-bit depth with the game's 1 cm near plane does not, so the
+  plate showed through. The machine bodies now get a small depth offset (1 x slope + 8 depth steps) via
+  a material copy; geometry and every other material are unchanged. All five islands' machines.
+* "Join the Discord" now opens https://discord.gg/TzEsEJgtJp (the Red Portal server).
 
 ## Build 109 changes (from 103)
 

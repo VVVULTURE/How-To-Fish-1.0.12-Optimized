@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
-<title>How to Fish 1.0.12 b109</title>
+<title>How to Fish 1.0.12 b119</title>
 <style>
 html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #000; }
 #unity-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -53,9 +53,9 @@ function unityShowBanner(msg, type) { console.warn("[unity " + (type || "info") 
 var base = BASE_URL ? BASE_URL.replace(/\/+$/, "") + "/" : "";
 var buildUrl = base + "Build";
 // appended to every payload request: a new build changes it, so a cached copy is never reused
-var CACHE_TAG = "1-0-12-b109-343a961e";
+var CACHE_TAG = "1-0-12-b119-62e99fb8";
 // exact part sizes written by package.py; null means discover them by probing (raw test builds)
-var PART_PLAN = {"data": [["WebGL.data.part1", 25165824], ["WebGL.data.part2", 25165824], ["WebGL.data.part3", 25165824], ["WebGL.data.part4", 25165824], ["WebGL.data.part5", 25165824], ["WebGL.data.part6", 25165824], ["WebGL.data.part7", 25165824], ["WebGL.data.part8", 10181666]], "wasm": [["WebGL.wasm.000", 25165824], ["WebGL.wasm.001", 25165824], ["WebGL.wasm.002", 5596724]]};
+var PART_PLAN = {"data": [["WebGL.data.part1", 25165824], ["WebGL.data.part2", 25165824], ["WebGL.data.part3", 25165824], ["WebGL.data.part4", 25165824], ["WebGL.data.part5", 25165824], ["WebGL.data.part6", 25165824], ["WebGL.data.part7", 25165824], ["WebGL.data.part8", 10420036]], "wasm": [["WebGL.wasm.000", 25165824], ["WebGL.wasm.001", 25165824], ["WebGL.wasm.002", 5608331]]};
 var loaderUrl = buildUrl + "/WebGL.loader.js";
 var frameworkUrl = buildUrl + "/WebGL.framework.js";
 var dataUrl = buildUrl + "/WebGL.data";
@@ -202,7 +202,7 @@ async function boot() {
     streamingAssetsUrl: base + "StreamingAssets",
     companyName: "Dazed Games",
     productName: "How to Fish",
-    productVersion: "1.0.12 b109",
+    productVersion: "1.0.12 b119",
     showBanner: unityShowBanner,
     // Saves live in Application.persistentDataPath, an in-memory IDBFS mount on WebGL. Without
     // this nothing is flushed to IndexedDB and every save is lost on reload.
